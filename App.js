@@ -10,14 +10,14 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 import cors from "cors"
 
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://joycexie0615:Xdj19960615!@kanbas.0kd43di.mongodb.net/Kanbas"
 console.log(process.env.MONGO_CONNECTION_STRING);
 console.log(CONNECTION_STRING);
 mongoose.connect(CONNECTION_STRING);
 const app = express()
 app.use(cors({
   credentials: true,
-  origin: process.env.NETLIFY_URL || "http://localhost:3000",
+  origin: process.env.NETLIFY_URL || "https://a6--cs5610-web-development-summer-full.netlify.app",
 }));
 app.use(express.json()); // Do all work after this line
 const sessionOptions = {
