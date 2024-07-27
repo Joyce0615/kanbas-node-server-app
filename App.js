@@ -22,8 +22,8 @@ const app = express()
 app.use(cors({
   credentials: true,
   origin: function(origin, callback){
-    const allowedOrigins = ['https://a6--cs5610-web-development-summer-full.netlify.app/#/Kanbas/Account/Signin', 'http://localhost:3000']
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    const allowedOrigins = [process.env.NETLIFY_URL, 'http://localhost:3000'];
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
