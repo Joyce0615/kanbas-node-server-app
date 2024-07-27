@@ -10,14 +10,25 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 import cors from "cors"
 
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://joycexie0615:Xdj19960615!@kanbas.0kd43di.mongodb.net/Kanbas"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://joycexie0615:Xdj19960615!@kanbas.0kd43di.mongodb.net/kanbas"
 console.log(process.env.MONGO_CONNECTION_STRING);
 console.log(CONNECTION_STRING);
 mongoose.connect(CONNECTION_STRING);
 const app = express()
+// app.use(cors({
+//   credentials: true,
+//   origin: process.env.NETLIFY_URL || "http://localhost:3000",
+// }));
 app.use(cors({
   credentials: true,
-  origin: process.env.NETLIFY_URL || "https://a6--cs5610-web-development-summer-full.netlify.app",
+  origin: function(origin, callback){
+    const allowedOrigins = process.env.NETLIFY_URL || 'https://a6--cs5610-web-development-summer-full.netlify.app'
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 app.use(express.json()); // Do all work after this line
 const sessionOptions = {
