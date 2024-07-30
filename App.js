@@ -15,21 +15,11 @@ console.log(process.env.MONGO_CONNECTION_STRING);
 console.log(CONNECTION_STRING);
 mongoose.connect(CONNECTION_STRING);
 const app = express()
-// app.use(cors({
-//   credentials: true,
-//   origin: process.env.NETLIFY_URL || "http://localhost:3000",
-// }));
 app.use(cors({
   credentials: true,
-  origin: function(origin, callback){
-    const allowedOrigins = [process.env.NETLIFY_URL, 'http://localhost:3000'];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: process.env.NETLIFY_URL || "http://localhost:3000",
 }));
+
 app.use(express.json()); // Do all work after this line
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
@@ -54,24 +44,3 @@ ModuleRoutes(app)
 AssignmentRoutes(app)
 Lab5(app)
 app.listen(process.env.PORT || 4000)
-
-// app.use((req, res, next) => {
-//   res.setHeader(
-//     "Access-Control-Allow-Origin",
-//     "*",
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE",
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   res.setHeader("Access-Control-Allow-Private-Network", true);
-//   //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
-//   res.setHeader("Access-Control-Max-Age", 7200);
-
-//   next();
-// });
